@@ -24,9 +24,9 @@ const Hero = () => {
                     </div>
 
 
-                    <div className="btn bg-neon hover:bg-[#9de000] text-black border-none px-12 py-3 text-sm mt-10">
+                    <a href="#all-exercises" className="btn bg-neon hover:bg-[#9de000] text-black border-none px-12 py-3 text-sm mt-10">
                         BROWSE WORKOUTS
-                    </div>
+                    </a>
 
                 </div>
 

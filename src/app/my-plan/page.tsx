@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { usePlan } from "@/context/ExerciseContext";
 
@@ -49,7 +49,6 @@ const MyPlanPage = () => {
 
     return (
         <div className="min-h-screen bg-[#0c0d10] px-4 py-8 text-white md:px-8">
-            <ToastContainer position="top-right" autoClose={3000} />
             <main className="mx-auto max-w-5xl space-y-8">
                 <div>
                     <h1 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
@@ -153,7 +152,7 @@ const MyPlanPage = () => {
                                             onClick={() => handleMarkAsDone(item.id, item.name)}
                                             className="rounded-xl bg-[#B5F200] px-4 py-2 text-xs font-black text-black transition-colors hover:bg-[#a3db00]"
                                         >
-                                            Mark as Done
+                                            ✓ Mark as Done
                                         </button>
                                     )}
 
