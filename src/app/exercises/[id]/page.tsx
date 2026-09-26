@@ -34,12 +34,13 @@ export default async function ExerciseDetails({
         <div className=" mx-auto max-w-7xl px-6 py-10 text-white">
             <main className="grid grid-cols-1 gap-10 lg:grid-cols-2">
 
-                <div className="relative w-full overflow-hidden rounded-2xl bg-zinc-900">
+                <div className="relative w-full h-auto min-h-65 lg:h-full overflow-hidden rounded-2xl bg-zinc-900">
                     <Image
                         src={exercise.image}
                         alt={exercise.name}
                         fill
                         priority
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover"
                     />
                 </div>
