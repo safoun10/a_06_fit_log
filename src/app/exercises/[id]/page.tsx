@@ -6,7 +6,7 @@ import ExerciseActionButtons from "@/components/ExerciseActionButtons";
 
 const getSingleExercise = async (id: string): Promise<IExercises | null> => {
     try {
-        const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
+        const res = await fetch(`https://api.api-store.workers.dev/api/fitlog/${id}`);
         if (!res.ok) return null;
         return await res.json();
     } catch {

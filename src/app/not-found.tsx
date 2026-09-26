@@ -5,12 +5,10 @@ const NotFound = () => {
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-[#0c0d10] px-4 text-center text-white md:px-8">
             <main className="mx-auto max-w-md space-y-6">
-                {/* Accent Tag */}
                 <div className="inline-block rounded-full border border-zinc-800 bg-[#121418] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#B5F200]">
                     404 Error
                 </div>
 
-                {/* Title */}
                 <div className="space-y-2">
                     <h1 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
                         PAGE NOT FOUND
@@ -20,7 +18,6 @@ const NotFound = () => {
                     </p>
                 </div>
 
-                {/* Call to Action Button */}
                 <div className="pt-2">
                     <Link
                         href="/"
