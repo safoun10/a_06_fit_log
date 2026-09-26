@@ -1,7 +1,6 @@
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiClock, FiStar } from 'react-icons/fi'; // or use lucide-react / svg icons
+import { FiClock, FiStar } from 'react-icons/fi';
 import { IoFlame } from 'react-icons/io5';
 import { IExercises } from '@/types/Exercise';
 
