@@ -2,6 +2,7 @@
 
 import { usePlan } from "@/context/ExerciseContext";
 import { IExercises } from "@/types/Exercise";
+import { toast } from "react-toastify";
 
 const ExerciseActionButtons = ({ exercise }: { exercise: IExercises }) => {
     const { addToPlan, removeFromPlan, addToSaved, removeFromSaved, isInPlan, isInSaved } = usePlan();
@@ -12,16 +13,40 @@ const ExerciseActionButtons = ({ exercise }: { exercise: IExercises }) => {
     const handlePlanToggle = () => {
         if (isPlanned) {
             removeFromPlan(exercise.id);
+            toast.info(`Removed "${exercise.name}" from today's plan.`, {
+                theme: "dark",
+                position: "bottom-left",
+                pauseOnHover: false,
+                autoClose: 2000,
+            });
         } else {
             addToPlan(exercise);
+            toast.success(`Added "${exercise.name}"!`, {
+                theme: "dark",
+                position: "bottom-left",
+                pauseOnHover: false,
+                autoClose: 2000,
+            });
         }
     };
 
     const handleSavedToggle = () => {
         if (isSaved) {
             removeFromSaved(exercise.id);
+            toast.info(`Removed "${exercise.name}" from saved workout`, {
+                theme: "dark",
+                position: "bottom-left",
+                pauseOnHover: false,
+                autoClose: 2000,
+            });
         } else {
             addToSaved(exercise);
+            toast.success(`Saved "${exercise.name}"!`, {
+                theme: "dark",
+                position: "bottom-left",
+                pauseOnHover: false,
+                autoClose: 2000,
+            });
         }
     };
 

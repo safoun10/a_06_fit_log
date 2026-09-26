@@ -3,15 +3,32 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { usePlan } from "@/context/ExerciseContext";
 
+type SortOption = "duration" | "calories" | "rating";
+
 const MyPlanPage = () => {
     const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
+    const [sortBy, setSortBy] = useState<SortOption>("duration");
     const { planList, savedList, removeFromPlan, removeFromSaved } = usePlan();
 
     const activeItems = activeTab === "today" ? planList : savedList;
+
+    
+    const sortedItems = [...activeItems].sort((a, b) => {
+        if (sortBy === "duration") {
+            return (b.duration || 0) - (a.duration || 0);
+        }
+        if (sortBy === "calories") {
+            return (b.caloriesBurned || 0) - (a.caloriesBurned || 0);
+        }
+        if (sortBy === "rating") {
+            return (b.rating || 0) - (a.rating || 0);
+        }
+        return 0;
+    });
 
     const exercisesCount = activeItems.length;
     const totalMinutes = activeItems.reduce((acc, curr) => acc + (curr.duration || 0), 0);
@@ -23,7 +40,7 @@ const MyPlanPage = () => {
             theme: "dark",
             position: "bottom-center",
             pauseOnHover: false,
-            autoClose: 2000
+            autoClose: 2000,
         });
     };
 
@@ -34,7 +51,7 @@ const MyPlanPage = () => {
                 theme: "dark",
                 position: "bottom-center",
                 pauseOnHover: false,
-                autoClose: 2000
+                autoClose: 2000,
             });
         } else {
             removeFromSaved(id);
@@ -42,7 +59,7 @@ const MyPlanPage = () => {
                 theme: "dark",
                 position: "bottom-center",
                 pauseOnHover: false,
-                autoClose: 2000
+                autoClose: 2000,
             });
         }
     };
@@ -79,26 +96,51 @@ const MyPlanPage = () => {
                         <button
                             onClick={() => setActiveTab("today")}
                             className={`rounded-lg px-5 py-2 text-xs font-bold transition-all ${activeTab === "today"
-                                ? "bg-[#1d2026] text-white"
-                                : "text-zinc-400 hover:text-white"
+                                    ? "bg-[#1d2026] text-white"
+                                    : "text-zinc-400 hover:text-white"
                                 }`}
                         >
-                            Todays Plan ({planList.length})
+                            Today{"'"}s Plan ({planList.length})
                         </button>
                         <button
                             onClick={() => setActiveTab("saved")}
                             className={`rounded-lg px-5 py-2 text-xs font-bold transition-all ${activeTab === "saved"
-                                ? "bg-[#1d2026] text-white"
-                                : "text-zinc-400 hover:text-white"
+                                    ? "bg-[#1d2026] text-white"
+                                    : "text-zinc-400 hover:text-white"
                                 }`}
                         >
                             Saved ({savedList.length})
                         </button>
                     </div>
+
+                    <div className="flex items-center gap-3">
+                        <span className="text-xs text-zinc-400">Sort By</span>
+                        <div className="relative">
+                            <select
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                                className="appearance-none rounded-xl border border-zinc-800/80 bg-[#121418] py-2 pl-4 pr-9 text-xs font-medium text-white cursor-pointer focus:outline-none focus:border-zinc-600 transition-colors"
+                            >
+                                <option value="duration" className="bg-[#121418] text-white">Duration</option>
+                                <option value="calories" className="bg-[#121418] text-white">Calories</option>
+                                <option value="rating" className="bg-[#121418] text-white">Rating</option>
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-400">
+                                <svg
+                                    className="h-3.5 w-3.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {activeItems.length === 0 ? (
-                    <div className="flex min-h-[320px] flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-800 bg-[#121418]/50 p-8 text-center">
+                {sortedItems.length === 0 ? (
+                    <div className="flex min-h-80 flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-800 bg-[#121418]/50 p-8 text-center">
                         <h3 className="text-lg font-black uppercase tracking-wide text-white">
                             NOTHING HERE YET
                         </h3>
@@ -114,7 +156,7 @@ const MyPlanPage = () => {
                     </div>
                 ) : (
                     <div className="space-y-4">
-                        {activeItems.map((item) => (
+                        {sortedItems.map((item) => (
                             <div
                                 key={item.id}
                                 className="flex flex-col gap-4 rounded-2xl border border-zinc-800/60 bg-[#121418] p-4 sm:flex-row sm:items-center sm:justify-between"
@@ -142,7 +184,7 @@ const MyPlanPage = () => {
                                 <div className="flex items-center gap-2">
                                     <Link
                                         href={`/exercises/${item.id}`}
-                                        className="rounded-xl border border-zinc-800 bg-[#171a21] px-4 py-2 text-xs font-semibold text-white"
+                                        className="rounded-xl border border-zinc-800 bg-[#171a21] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-zinc-800"
                                     >
                                         View Details
                                     </Link>
@@ -158,7 +200,7 @@ const MyPlanPage = () => {
 
                                     <button
                                         onClick={() => handleRemove(item.id, item.name)}
-                                        className="p-2 text-zinc-500 hover:text-zinc-300"
+                                        className="p-2 text-zinc-500 hover:text-zinc-300 transition-colors"
                                     >
                                         ✕
                                     </button>
