@@ -2,6 +2,7 @@
 import AllExercises from "@/components/AllExercises";
 
 import Hero from "@/components/Hero";
+import { Suspense } from "react";
 
 
 const App = () => {
@@ -9,7 +10,11 @@ const App = () => {
         <div>
 
             <Hero></Hero>
-            <AllExercises></AllExercises>
+            <Suspense fallback={
+                <span className="loading loading-spinner text-neutral"></span>
+            }>
+                <AllExercises></AllExercises>
+            </Suspense>
 
         </div>
     );
