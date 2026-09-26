@@ -21,6 +21,9 @@ const MyPlanPage = () => {
         removeFromPlan(id);
         toast.success(`Completed "${name}"! Great work.`, {
             theme: "dark",
+            position: "bottom-center",
+            pauseOnHover: false,
+            autoClose: 2000
         });
     };
 
@@ -29,11 +32,17 @@ const MyPlanPage = () => {
             removeFromPlan(id);
             toast.info(`Removed "${name}" from today's plan.`, {
                 theme: "dark",
+                position: "bottom-center",
+                pauseOnHover: false,
+                autoClose: 2000
             });
         } else {
             removeFromSaved(id);
             toast.info(`Removed "${name}" from saved list.`, {
                 theme: "dark",
+                position: "bottom-center",
+                pauseOnHover: false,
+                autoClose: 2000
             });
         }
     };
